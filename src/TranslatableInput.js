@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-unresolved, import/extensions
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import 'flag-icon-css/css/flag-icon.min.css';
@@ -142,18 +142,15 @@ class TranslatableInput extends Component {
 
     return (
       <div className={componentClasses}>
-        <Select
-          value={lang}
-          options={langOptions}
-          valueRenderer={value => this.renderFlag(value)}
-          optionRenderer={option => this.renderFlag(option)}
-          onChange={val => this.changeLanguage(val)}
-          searchable={false}
-          clearable={false}
-          disabled={this.props.disabled}
-          onFocus={() => this.focused(true)}
-          onBlur={() => this.focused(false)}
-        />
+      <Select
+        value={langOptions.find(o => o.value === lang)}
+        options={langOptions}
+        onChange={val => this.changeLanguage(val)}
+        isSearchable={false}
+        isClearable={false}
+        isDisabled={this.props.disabled}
+        components={{ SingleValue: ({ data }) => this.renderFlag(data), Option: ({ data }) => this.renderFlag(data) }}
+      />
         {
           textarea ?
             <textarea
